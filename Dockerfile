@@ -8,10 +8,10 @@
 
 #worse image
 ARG PYTHON_VERSION=3.11.6
-#FROM python:${PYTHON_VERSION}-slim as base
+FROM python:${PYTHON_VERSION}-slim as base
 
 #better image
-FROM python:alpine as base
+#FROM python:alpine as base
 
 
 
