@@ -1,5 +1,7 @@
 # define latest requirements for flast, pandas and numpy
+#Fix flas versions 2.3.2
 Flask==1.1.2
 jinja2==3.0.3
 itsdangerous==2.0.1
+#Fix werkzeug Verions 2.1.1 and 3.0.3
 werkzeug==2.0.2
