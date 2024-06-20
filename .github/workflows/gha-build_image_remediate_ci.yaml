@@ -15,6 +15,8 @@ env:
   SHA: ${{ github.event.pull_request.head.sha || github.event.after }}
   # Use `latest` as the tag to compare to if empty, assuming that it's already pushed
   COMPARE_TAG: latest
+  # add flag for build summary
+  DOCKER_BUILD_NO_SUMMARY: false
 
 jobs:
   build:
