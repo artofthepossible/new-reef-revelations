@@ -8,10 +8,28 @@
 
 #worse image
 ARG PYTHON_VERSION=3.11.6
-FROM python:${PYTHON_VERSION}-slim as base
+#FROM python:${PYTHON_VERSION}-slim as base
 
 #better image
 #FROM python:alpine as base
+#FROM python:alpine
+FROM --platform=linux/amd64 python:alpine
+
+# Common FinOps and Operational Container Labels
+# Labels add metadata to an image. Add key value pairs 
+LABEL "com.example.vendor"="ACME Incorporated"
+LABEL com.example.label-with-value="foo"
+LABEL version="1.0"
+LABEL LOB="Line Of Business"
+LABEL BU="Business Unit"
+LABEL com.example.finops.cost-center="12345"
+LABEL com.example.finops.project="my-project"
+LABEL com.example.operational.team="devops"
+LABEL com.example.operational.environment="production"
+LABEL com.example.operational.region="us-west-2"
+LABEL description="This text illustrates \
+that label-values can span multiple lines."
+LABEL org.opencontainers.image.authors="abishaiep@gmail.com"
 
 
 
@@ -59,4 +77,5 @@ COPY . .
 EXPOSE 8000
 
 # Run the application.
-CMD flask run
+#CMD flask run
+CMD ["flask", "run"]
