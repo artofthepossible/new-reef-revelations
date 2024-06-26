@@ -30,6 +30,7 @@ LABEL com.example.operational.region="us-west-2"
 LABEL description="This text illustrates \
 that label-values can span multiple lines."
 LABEL org.opencontainers.image.authors="abishaiep@gmail.com"
+LABEL org.opencontainers.image.finops.cost-center="12345"
 
 
 
