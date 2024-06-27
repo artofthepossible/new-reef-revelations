@@ -26,11 +26,28 @@ LABEL com.example.finops.cost-center="12345"
 LABEL com.example.finops.project="my-project"
 LABEL com.example.operational.team="devops"
 LABEL com.example.operational.environment="production"
-LABEL com.example.operational.region="us-west-2"
+LABEL com.example.operational.csp="aws"
+LABEL com.example.operational.region="us-east-1"
+LABEL com.example.operational.version="6.27"
+LABEL com.example.operational.component="front-end"
+LABEL com.example.operational.release="stable"
+LABEL com.example.operational.track="weekly"
+LABEL com.example.operational.tier="front-end"
+LABEL com.example.operational.rating="franchise-critical"
 LABEL description="This text illustrates \
 that label-values can span multiple lines."
 LABEL org.opencontainers.image.authors="abishaiep@gmail.com"
-LABEL org.opencontainers.image.finops.cost-center="12345"
+LABEL org.opencontainers.deployment.id="12345"
+LABEL org.opencontainers.deployment.environment="dev"
+LABEL org.opencontainers.application.id="54321"
+LABEL org.opencontainers.application.name="new-reef-revelations"
+LABEL org.opencontainers.namespace="new-reef-revelations"
+LABEL org.opencontainers.image.created="2024-08-31T19:00:00Z"
+LABEL org.opencontainers.image.description="This is a sample Python application\
+This text illustrates that label-values can span multiple lines."
+
+
+
 
 
 
