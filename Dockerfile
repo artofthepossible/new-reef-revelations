@@ -47,11 +47,6 @@ LABEL org.opencontainers.image.created="2024-08-31T19:00:00Z"
 LABEL org.opencontainers.image.description="This is a sample Python application\
 This text illustrates that label-values can span multiple lines."
 
-
-
-
-
-
 # Prevents Python from writing pyc files.
 ENV PYTHONDONTWRITEBYTECODE=1
 
@@ -74,11 +69,15 @@ RUN adduser \
     --uid "${UID}" \
     appuser
 
+# Copy dependencies.sh script
+COPY scripts/dependencies.sh /app/scripts/dependencies.sh
+
 # Make the script executable
 RUN chmod +x /app/scripts/dependencies.sh
 
 # Run the dependencies script
-RUN /scripts/dependencies.sh
+RUN /app/scripts/dependencies.sh
+
 
 # Download dependencies as a separate step to take advantage of Docker's caching.
 # Leverage a cache mount to /root/.cache/pip to speed up subsequent builds.
