@@ -10,8 +10,13 @@ pip install -r requirements.txt
 pip install --upgrade Flask Jinja2
 
 #Set the FLASK_APP environment variable to tell Flask where your application is located:
-
-#export FLASK_APP=app.py
+# Assure the environment is correct, do necessary preps but don't start the app
+echo "Setting up environment for flask app"
+export FLASK_APP=app.py
 
 #Run the Flask application:
-flask run
+#flask run
+#!/bin/sh
+
+
+echo "Environment setup complete"
