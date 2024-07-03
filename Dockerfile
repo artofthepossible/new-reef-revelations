@@ -78,7 +78,7 @@ RUN adduser \
 RUN chmod +x /app/scripts/dependencies.sh
 
 # Run the dependencies script
-RUN /app/scripts/dependencies.sh
+RUN /scripts/dependencies.sh
 
 # Download dependencies as a separate step to take advantage of Docker's caching.
 # Leverage a cache mount to /root/.cache/pip to speed up subsequent builds.
