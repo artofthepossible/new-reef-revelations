@@ -1,5 +1,6 @@
 # syntax=docker/dockerfile:1
 
+
 # Comments are provided throughout this file to help you get started.
 # If you need more help, visit the Dockerfile reference guide at
 # https://docs.docker.com/go/dockerfile-reference/
@@ -49,6 +50,9 @@ This text illustrates that label-values can span multiple lines."
 
 # Prevents Python from writing pyc files.
 ENV PYTHONDONTWRITEBYTECODE=1
+
+# Set FLASK_APP to your main application script
+ENV FLASK_APP=app.py  
 
 # Keeps Python from buffering stdout and stderr to avoid situations where
 # the application crashes without emitting any logs due to buffering.
