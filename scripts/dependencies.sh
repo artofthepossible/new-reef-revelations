@@ -7,7 +7,7 @@ source venv/bin/activate
 #Install the required dependencies listed in requirements.txt by running:
 pip install -r requirements.txt
 #pip install Flask Jinja2
-pip install --upgrade Flask Jinja2
+#pip install --upgrade Flask Jinja2
 
 #Set the FLASK_APP environment variable to tell Flask where your application is located:
 # Assure the environment is correct, do necessary preps but don't start the app
