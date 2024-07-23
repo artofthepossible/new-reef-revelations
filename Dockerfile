@@ -9,13 +9,13 @@
 
 #worse image
 ARG PYTHON_VERSION=3.11.6
-#FROM python:${PYTHON_VERSION}-slim as base
+FROM python:${PYTHON_VERSION}-slim as base
 
 #better image
 #FROM python:alpine as base
 #FROM python:alpine
 #FROM --platform=linux/amd64 python:alpine
-FROM --platform=linux/arm64/v8 python:alpine 
+#FROM --platform=linux/arm64/v8 python:alpine 
 
 # Common FinOps and Operational Container Labels
 # Labels add metadata to an image. Add key value pairs 
