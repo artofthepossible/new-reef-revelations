@@ -74,13 +74,13 @@ RUN adduser \
     appuser
 
 # Copy dependencies.sh script
-COPY scripts/dependencies.sh /app/scripts/dependencies.sh
+#COPY scripts/dependencies.sh /app/scripts/dependencies.sh
 
 # Make the script executable
-RUN chmod +x /app/scripts/dependencies.sh
+#RUN chmod +x /app/scripts/dependencies.sh
 
 # Run the dependencies script
-RUN /app/scripts/dependencies.sh
+#RUN /app/scripts/dependencies.sh
 
 
 # Download dependencies as a separate step to take advantage of Docker's caching.
