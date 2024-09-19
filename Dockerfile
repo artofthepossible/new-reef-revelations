@@ -13,7 +13,7 @@ ARG PYTHON_VERSION=3.11.6
 #better image
 #ARG PYTHON_VERSION=3.12.5
 #ARG PYTHON_VERSION=3.11.9
-FROM python:${PYTHON_VERSION}-slim as base
+FROM python:${PYTHON_VERSION}-slim
 
 #better image
 #FROM python:alpine as base
