@@ -49,6 +49,8 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+          SONAR_projectKey: ${{ secrets.SONAR_projectKey }}
+          SONAR_organization: ${{ secrets.SONAR_organization }}
       - run: echo "🖥️ The sonar integration workflow is ready to show quality gates."
 
       
