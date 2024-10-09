@@ -44,6 +44,27 @@ jobs:
           ref: ${{ env.SHA }}
       - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
       - run: echo "🖥️ The workflow is now ready to test your code on the runner."
+      
+      - name: SonarIntegration
+      #jobs:
+      #sonarqube:
+      #runs-on: ubuntu-latest
+      #steps:
+        uses: actions/checkout@v4
+        with:
+            # Disabling shallow clones is recommended for improving the relevancy of reporting
+            fetch-depth: 0
+      - name: SonarQube Scan
+        uses: sonarsource/sonarqube-scan-action@v2.1.0 # Ex: v2.1.0, See the latest version at https://github.com/marketplace/actions/official-sonarqube-scan
+            #env:
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            -Dsonar.projectKey=${{ secrets.SONAR_PROJECTKEY }}
+            -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }}
+            -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }}      
+      - run: echo "🖥️ The sonar integration workflow is ready to show quality gates."
 
       - name: List files in the repository
         run: |
@@ -133,23 +154,4 @@ jobs:
           summary: true
       - run: echo "✅ Docker Scout Analysis compare image status is ${{ job.status }}."
 
-      - name: SonarIntegration
-      #jobs:
-      #sonarqube:
-      #runs-on: ubuntu-latest
-      #steps:
-        uses: actions/checkout@v4
-        with:
-            # Disabling shallow clones is recommended for improving the relevancy of reporting
-            fetch-depth: 0
-      - name: SonarQube Scan
-        uses: sonarsource/sonarqube-scan-action@v2.1.0 # Ex: v2.1.0, See the latest version at https://github.com/marketplace/actions/official-sonarqube-scan
-            #env:
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        with:
-          args: >
-            -Dsonar.projectKey=${{ secrets.SONAR_PROJECTKEY }}
-            -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }}
-            -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }}      
-      - run: echo "🖥️ The sonar integration workflow is ready to show quality gates."
+      
