@@ -50,7 +50,7 @@ jobs:
           ls ${{ github.workspace }}
       - run: echo "🍏 List files in the repository status is ${{ job.status }}."
 
-     
+          
       # Login against a Docker registry except on PR
       # https://github.com/docker/login-action
       - name: Log into registry ${{ env.REGISTRY }}
@@ -105,26 +105,7 @@ jobs:
           outputs: ${{ github.event_name == 'pull_request' && 'type=cacheonly' || 'type=registry,push=true' }}
       - run: echo "✅ Build and push Docker image status is ${{ job.status }}."
     
-      - name: SonarIntegration
-        #jobs:
-        #sonarqube:
-        #runs-on: ubuntu-latest
-        #steps:
-        uses: actions/checkout@v4
-        with:
-              # Disabling shallow clones is recommended for improving the relevancy of reporting
-              fetch-depth: 0
-      - name: SonarQube Scan
-        uses: sonarsource/sonarqube-scan-action@v2.1.0 # Ex: v2.1.0, See the latest version at https://github.com/marketplace/actions/official-sonarqube-scan
-              #env:
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        with:
-          args: >
-            -Dsonar.projectKey=${{ secrets.SONAR_PROJECTKEY }}
-            -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }}
-            -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }}      
-      - run: echo "🖥️ The sonar integration workflow is ready to show quality gates."
+      
 
     # Docker Scout display a quickview, cves, recommendations output
       - name: Analyze for critical and high CVEs
@@ -151,3 +132,24 @@ jobs:
           exit-code: true
           summary: true
       - run: echo "✅ Docker Scout Analysis compare image status is ${{ job.status }}."
+
+      - name: SonarIntegration
+      #jobs:
+      #sonarqube:
+      #runs-on: ubuntu-latest
+      #steps:
+        uses: actions/checkout@v4
+        with:
+            # Disabling shallow clones is recommended for improving the relevancy of reporting
+            fetch-depth: 0
+      - name: SonarQube Scan
+        uses: sonarsource/sonarqube-scan-action@v2.1.0 # Ex: v2.1.0, See the latest version at https://github.com/marketplace/actions/official-sonarqube-scan
+            #env:
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            -Dsonar.projectKey=${{ secrets.SONAR_PROJECTKEY }}
+            -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }}
+            -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }}      
+      - run: echo "🖥️ The sonar integration workflow is ready to show quality gates."
