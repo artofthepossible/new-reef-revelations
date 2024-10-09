@@ -12,8 +12,9 @@ env:
   #sonar 
   SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
   SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-  SONAR_projectKey: ${{ secrets.SONAR_projectKey }}
-  SONAR_organization: ${{ secrets.SONAR_organization }}
+  SONAR_PROJECTKEY: ${{ secrets.SONAR_PROJECTKEY }}
+  SONAR_ORGANIZATION: ${{ secrets.SONAR_ORGANIZATION }}
+
   # Use docker.io for Docker Hub if empty
   REGISTRY: docker.io
   IMAGE_NAME: ${{ secrets.ORGANIZATION}}/${{ secrets.IMAGE_NAME }}
@@ -23,6 +24,7 @@ env:
   # add flag for build summary
   #DOCKER_BUILD_NO_SUMMARY: false
 
+  
 jobs:
   build:
 
@@ -115,7 +117,13 @@ jobs:
       - name: SonarQube Scan
         uses: sonarsource/sonarqube-scan-action@v2.1.0 # Ex: v2.1.0, See the latest version at https://github.com/marketplace/actions/official-sonarqube-scan
               #env:
-              
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            -Dsonar.projectKey=${{ secrets.SONAR_PROJECTKEY }}
+            -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }}
+            -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }}      
       - run: echo "🖥️ The sonar integration workflow is ready to show quality gates."
 
     # Docker Scout display a quickview, cves, recommendations output
