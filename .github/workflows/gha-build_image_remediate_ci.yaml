@@ -63,7 +63,8 @@ jobs:
           args: >
             -Dsonar.projectKey=${{ secrets.SONAR_PROJECTKEY }}
             -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }}
-            -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }}      
+            -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }}
+            -Dsonar.branch.name=${{ github.ref_name }}      
       - run: echo "🖥️ The sonar integration workflow is ready to show quality gates."
 
       - name: List files in the repository
