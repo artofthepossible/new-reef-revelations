@@ -62,11 +62,13 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
+          projectBaseDir: app/src
           args: >
             -Dsonar.projectKey=${{ secrets.SONAR_PROJECTKEY }}
             -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }}
             -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }}
-            -Dsonar.branch.name=${{ github.ref_name }}      
+            -Dsonar.branch.name=${{ github.ref_name }}
+            -sonar.projectKey=${{ secrets.SONAR_PROJECTKEY }}      
       - run: echo "🖥️ The sonar integration workflow is ready to show quality gates."
 
       - name: List files in the repository
