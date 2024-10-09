@@ -61,7 +61,7 @@ jobs:
             #env:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        with:
+        #with:
           #projectBaseDir: app/src
           #args: >
             #-Dsonar.projectKey=${{ secrets.SONAR_PROJECTKEY }}
