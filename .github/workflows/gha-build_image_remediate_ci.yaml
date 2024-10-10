@@ -16,7 +16,6 @@ env:
   SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
   SONAR_PROJECTKEY: ${{ secrets.SONAR_PROJECTKEY }}
   SONAR_ORGANIZATION: ${{ secrets.SONAR_ORGANIZATION }}
-
   # Use docker.io for Docker Hub if empty
   REGISTRY: docker.io
   IMAGE_NAME: ${{ secrets.ORGANIZATION}}/${{ secrets.IMAGE_NAME }}
