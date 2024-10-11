@@ -54,7 +54,7 @@ LABEL org.opencontainers.application.id="54321"
 LABEL org.opencontainers.application.name="new-reef-revelations"
 LABEL org.opencontainers.namespace="new-reef-revelations"
 LABEL org.opencontainers.image.created="2024-08-31T19:00:00Z"
-LABEL org.opencontainers.image.description="This is a sample Python application\
+LABEL org.opencontainers.image.description="This is a demo sample Python application\
 This text illustrates that label-values can span multiple lines."
 
 # Prevents Python from writing pyc files.
