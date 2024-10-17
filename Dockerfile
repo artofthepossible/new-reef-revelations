@@ -8,7 +8,7 @@
 # Want to help us make this template better? Share your feedback here: https://forms.gle/ybq9Krt8jtBL3iCk7
 
 #worse image
-ARG PYTHON_VERSION=3.11.6
+#ARG PYTHON_VERSION=3.11.6
 
 #better image
 #ARG PYTHON_VERSION=3.12.5
@@ -17,10 +17,10 @@ ARG PYTHON_VERSION=3.11.6
 #alpine
 #ARG PYTHON_VERSION=3.12.7-alpine 
 #ARG PYTHON_VERSION=alpine 
-FROM python:${PYTHON_VERSION}
+#FROM python:${PYTHON_VERSION}
 #better image
 #FROM python:alpine as base
-#FROM python:alpine
+FROM python:alpine
 #FROM --platform=linux/amd64 python:alpine
 #FROM --platform=linux/arm64/v8 python:alpine 
 #python:3.11.9-slim	
