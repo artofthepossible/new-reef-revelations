@@ -22,14 +22,14 @@
 #FROM python:alpine as base
 
 #TARGET IMAGE
-#FROM python:alpine
+FROM python:alpine
 #FROM --platform=linux/amd64 python:alpine
 #FROM --platform=linux/arm64/v8 python:alpine 
 #python:3.11.9-slim	
 #python:3.12.5
 
 #worse IMAGE
-FROM python:3.11.9
+#FROM python:3.11.9
 
 # Common FinOps and Operational Container Labels
 # Labels add metadata to an image. Add key value pairs 
