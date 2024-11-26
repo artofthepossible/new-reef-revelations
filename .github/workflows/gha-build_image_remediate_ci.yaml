@@ -123,13 +123,21 @@ jobs:
           summary: true
       - run: echo "✅ Docker Scout Analysis - QuickView, CVEs and Recommendations status is ${{ job.status }}."
 
+      - name: Upload SARIF result
+        id: upload-sarif
+        if: ${{ github.event_name != 'pull_request_target' }}
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: sarif.output.json
+      - run: echo "✅ Docker Scout Analysis - Analyze vulnerabilities and upload report to GitHub code scanning status is ${{ job.status }}."
+
     # Compare the image built in the pull request with the one in production
       - name: Docker Scout
         id: docker-scout
         if: ${{ github.event_name == 'pull_request' }}
         uses: docker/scout-action@v1.9.3
         with:
-          command: compare
+          command: compare, recommendations
           image: ${{ steps.meta.outputs.tags }}
           only-severities: critical,high
           exit-code: true
