@@ -31,6 +31,7 @@ FROM python:${PYTHON_VERSION}
 
 #worse IMAGE
 #FROM python:3.11.9
+#better alpine3.20,
 
 # Common FinOps and Operational Container Labels
 # Labels add metadata to an image. Add key value pairs 
