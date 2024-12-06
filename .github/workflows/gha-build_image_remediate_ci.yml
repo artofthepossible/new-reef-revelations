@@ -1,3 +1,4 @@
+name: gha-build_image_remediate_ci
 on:
   push:
     tags: [ "*" ]
