@@ -32,20 +32,12 @@ jobs:
           password: ${{ secrets.DOCKER_PAT }}
       - run: echo "✅ Log into registry status is ${{ job.status }}."
 
-      - name: List images with specific tag
+      - name: List all image tags in the repository
         run: |
           NAMESPACE=demonstrationorg
           REPOSITORY=ci-docker-reef-revelations
-          TAG=17cd519
           curl -s -u ${{ secrets.DOCKER_USER }}:${{ secrets.DOCKER_PAT }} \
-          "https://hub.docker.com/v2/namespaces/${NAMESPACE}/repositories/${REPOSITORY}/tags/${TAG}/" | jq '.results[].digest'
-      - run: echo "✅ Listed images with tag 17cd519."
+          "https://hub.docker.com/v2/namespaces/${NAMESPACE}/repositories/${REPOSITORY}/tags/" | jq '.results[].name'
+      - run: echo "✅ Listed all image tags in the repository."
 
-      - name: Delete specific Docker image tag
-        run: |
-          NAMESPACE=demonstrationorg
-          REPOSITORY=ci-docker-reef-revelations
-          TAG=17cd519
-          curl -s -X DELETE -u ${{ secrets.DOCKER_USER }}:${{ secrets.DOCKER_PAT }} \
-          "https://hub.docker.com/v2/repositories/${NAMESPACE}/${REPOSITORY}/tags/${TAG}/"
-      - run: echo "✅ Deleted images with tag 17cd519."
+     
