@@ -14,8 +14,10 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-    steps:
-      # Your existing build steps here
+    permissions:
+      contents: read
+      packages: write
+      pull-requests: write
 
   cleanup:
     runs-on: ubuntu-latest
