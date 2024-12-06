@@ -25,12 +25,15 @@ jobs:
       - name: Log into registry
         uses: docker/login-action@v3
         with:
+          registry: ${{ env.REGISTRY }}
           username: ${{ secrets.DOCKER_USER }}
           password: ${{ secrets.DOCKER_PAT }}
+      - run: echo "✅ Log into registry  status is ${{ job.status }}."
+
       - name: Delete specific Docker image tag
         run: |
           IMAGE_NAME=${{ secrets.ORGANIZATION}}/${{ secrets.IMAGE_NAME }}
           TAG=17cd519
           curl -s -X DELETE -u ${{ secrets.DOCKER_USER }}:${{ secrets.DOCKER_PAT }} \
           "https://hub.docker.com/v2/repositories/${{ secrets.ORGANIZATION }}/${{ secrets.IMAGE_NAME }}/tags/${TAG}/"
-      
+      - run: echo "✅ Delete specific Docker image tag in DH ${{ env.REGISTRY }} status is ${{ job.status }}."
