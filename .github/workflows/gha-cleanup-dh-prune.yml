@@ -5,11 +5,11 @@ on:
         - main
     pull_request:
       branches: [ "**" ]
-  
-  env:
-    REGISTRY: docker.io
-  
-  jobs:
+
+   
+env:
+        REGISTRY: docker.io
+jobs:
     build:
       runs-on: ubuntu-latest
       permissions:
