@@ -17,7 +17,8 @@
 #FROM python:${PYTHON_VERSION}-slim as base
 
 #best
-FROM python:alpine
+#FROM python:alpine
+FROM 3.13.1-alpine3.20
 
 # Prevents Python from writing pyc files.
 ENV PYTHONDONTWRITEBYTECODE=1
