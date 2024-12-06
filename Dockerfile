@@ -18,7 +18,7 @@
 
 #best
 #FROM python:alpine
-FROM 3.13.1-alpine3.20
+FROM alpine:3.20
 
 # Prevents Python from writing pyc files.
 ENV PYTHONDONTWRITEBYTECODE=1
