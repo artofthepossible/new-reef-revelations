@@ -8,6 +8,8 @@ on:
 
 env:
   REGISTRY: docker.io
+  IMAGE_NAME: ${{ secrets.ORGANIZATION}}/${{ secrets.IMAGE_NAME }}
+
 
 jobs:
   build:
@@ -36,7 +38,7 @@ jobs:
           IMAGE_NAME=${{ secrets.ORGANIZATION}}/${{ secrets.IMAGE_NAME }}
           TAG=17cd519
           curl -s -u ${{ secrets.DOCKER_USER }}:${{ secrets.DOCKER_PAT }} \
-          "https://hub.docker.com/v2/repositories/${{ secrets.ORGANIZATION }}/${{ secrets.IMAGE_NAME }}/tags/${TAG}/" | jq '.'
+          "https://hub.docker.com/v2/repositories/${{ secrets.ORGANIZATION }}/${{ env.IMAGE_NAME }}/tags/${TAG}/" | jq '.'
       - run: echo "✅ Listed images with tag 17cd519."
 
       - name: Delete specific Docker image tag
@@ -44,5 +46,5 @@ jobs:
           IMAGE_NAME=${{ secrets.ORGANIZATION}}/${{ secrets.IMAGE_NAME }}
           TAG=17cd519
           curl -s -X DELETE -u ${{ secrets.DOCKER_USER }}:${{ secrets.DOCKER_PAT }} \
-          "https://hub.docker.com/v2/repositories/${{ secrets.ORGANIZATION }}/${{ secrets.IMAGE_NAME }}/tags/${TAG}/"
+          "https://hub.docker.com/v2/repositories/${{ secrets.ORGANIZATION }}/${{ env.IMAGE_NAME }}/tags/${TAG}/"
       - run: echo "✅ Deleted images with tag 17cd519."
