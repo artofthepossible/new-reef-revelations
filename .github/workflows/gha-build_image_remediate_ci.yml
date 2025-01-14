@@ -84,7 +84,7 @@ jobs:
           version: "lab:latest"
           driver: cloud
           endpoint: "demonstrationorg/default"
-      - run: echo "✅ Set up Docker Build Cloud cloud-demonstrationorg-default Buildx status is ${{ job.status }}."
+      - run: echo "✅ Set Up Docker Build Cloud cloud-demonstrationorg-default Buildx status is ${{ job.status }}."
       
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
@@ -120,7 +120,7 @@ jobs:
           sarif-file: sarif.output.json
           platform: "linux/arm64"
           summary: true
-      - run: echo "✅ Docker Scout Analysis - QuickView, CVEs and Recommendations status is ${{ job.status }}."
+      - run: echo "✅ DOCKER SCOUT Analysis - QuickView, CVEs and Recommendations status is ${{ job.status }}."
 
 
     # Compare the image built in the pull request with the one in production
@@ -134,5 +134,5 @@ jobs:
           only-severities: critical,high
           exit-code: true
           summary: true
-      - run: echo "✅ Docker Scout Analysis compare image status is ${{ job.status }}."
+      - run: echo "✅ DOCKER SCOUT Analysis compare image status is ${{ job.status }}."
 
