@@ -14,10 +14,10 @@
 #FROM python:${PYTHON_VERSION}-slim as base
 
 #even worse IMAGE
-FROM python:3.11.9
+#FROM python:3.11.9
 
 #best image for the job
-#FROM python:alpine
+FROM python:alpine
 
 # Prevents Python from writing pyc files.
 ENV PYTHONDONTWRITEBYTECODE=1
