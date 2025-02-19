@@ -9,12 +9,12 @@
 #ARG PYTHON_VERSION=3.12.7
 #FROM python:${PYTHON_VERSION}-slim as base
 
-#even worse IMAGE
-#FROM python:3.11.9
-
 #worse
-ARG PYTHON_VERSION=3.12.7
-FROM python:${PYTHON_VERSION}-slim as base
+#ARG PYTHON_VERSION=3.12.7
+#FROM python:${PYTHON_VERSION}-slim as base
+
+#even worse IMAGE
+FROM python:3.11.9
 
 #best image for the job
 #FROM python:alpine
