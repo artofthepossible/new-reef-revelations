@@ -32,3 +32,11 @@
 **/values.dev.yaml
 LICENSE
 README.md
+
+# Ignore Git files
+.git
+# Ignore Python cache
+__pycache__/
+*.pyc
+# Ignore environment files
+.env

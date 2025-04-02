@@ -14,10 +14,11 @@
 #FROM python:${PYTHON_VERSION}-slim as base
 
 #even worse IMAGE
-FROM python:3.11.9
+#FROM python:3.11.9
 
 #best image for the job
-#FROM python:alpine
+FROM python:alpine
+#FROM docker/dhi-python:3.9-debian12-dev
 
 # Prevents Python from writing pyc files.
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -44,10 +45,14 @@ RUN adduser \
 # Leverage a cache mount to /root/.cache/pip to speed up subsequent builds.
 # Leverage a bind mount to requirements.txt to avoid having to copy them into
 # into this layer.
+#RUN --mount=type=cache,target=/root/.cache/pip \
+#    --mount=type=bind,source=requirements.txt,target=requirements.txt \
+#    python -m pip install -r requirements.txt
 RUN --mount=type=cache,target=/root/.cache/pip \
     --mount=type=bind,source=requirements.txt,target=requirements.txt \
-    python -m pip install -r requirements.txt
-
+    python -m pip install --upgrade pip && \
+    python -m pip install --no-cache-dir -r requirements.txt
+    
 # Switch to the non-privileged user to run the application.
 USER appuser
 
