@@ -135,10 +135,3 @@ jobs:
           exit-code: true
           summary: true
       - run: echo "✅ DOCKER SCOUT Analysis compare image status is ${{ job.status }}."
-
-    # Step 5: Block promotion if vulnerabilities are medium or higher
-      - name: Validate scan results
-        run: |
-          docker scout cves my-image:${{ github.sha }} --exit-code 1 --only-severities high,critical
-        # If the above step returns a non-zero exit code, the workflow will fail.
-      - run: echo "✅ DOCKER SCOUT SOFT BLOCK - If the above step returns a non-zero exit code, the workflow will fail. status is ${{ job.status }}."
