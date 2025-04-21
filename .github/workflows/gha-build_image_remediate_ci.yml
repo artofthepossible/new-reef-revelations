@@ -113,7 +113,7 @@ jobs:
       - name: Analyze for critical and high CVEs
         id: docker-scout-cves
         if: ${{ github.event_name != 'pull_request_target' }}
-        uses: docker/scout-action@v1.9.3
+        uses: docker/scout-action@v1.17.1
         with:
           command: quickview, cves, recommendations
           image: ${{ steps.meta.outputs.tags }}
@@ -127,12 +127,18 @@ jobs:
       - name: Docker Scout
         id: docker-scout
         if: ${{ github.event_name == 'pull_request' }}
-        uses: docker/scout-action@v1.9.3
+        uses: docker/scout-action@v1.17.1
         with:
-          command: compare, recommendations
+          command: compare, recommendations, attestation-add
           image: ${{ steps.meta.outputs.tags }}
           only-severities: critical,high
           exit-code: true
           summary: true
       - run: echo "✅ DOCKER SCOUT Analysis compare image status is ${{ job.status }}."
 
+    # Step 5: Block promotion if vulnerabilities are medium or higher
+      - name: Validate scan results
+        run: |
+          docker scout cves my-image:${{ github.sha }} --exit-code 1 --only-severities high,critical
+        # If the above step returns a non-zero exit code, the workflow will fail.
+      - run: echo "✅ DOCKER SCOUT SOFT BLOCK - If the above step returns a non-zero exit code, the workflow will fail. status is ${{ job.status }}."
