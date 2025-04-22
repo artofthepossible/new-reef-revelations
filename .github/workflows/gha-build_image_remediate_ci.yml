@@ -45,8 +45,7 @@ jobs:
       - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
       - run: echo "🖥️ The workflow is now ready to test your code on the runner."
       
-     
-
+    
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
@@ -131,7 +130,17 @@ jobs:
         with:
           command: compare, recommendations, attestation-add
           image: ${{ steps.meta.outputs.tags }}
-          only-severities: critical,high
+          only-severities: critical,high,medium
           exit-code: true
           summary: true
       - run: echo "✅ DOCKER SCOUT Analysis compare image status is ${{ job.status }}."
+
+      # Validate scan results and block if vulnerabilities are found
+      - name: Validate Docker Scout scan results
+        if: ${{ github.event_name != 'pull_request_target' }}
+        run: |
+          if [ "${{ steps.docker-scout-cves.outcome }}" == "failure" ]; then
+            echo "⚠️ Critical or high or medium severity vulnerabilities detected!"
+            echo "Please review the Docker Scout analysis results above."
+            exit 1
+          fi
