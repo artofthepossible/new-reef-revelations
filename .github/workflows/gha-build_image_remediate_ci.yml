@@ -160,9 +160,9 @@ jobs:
         id: docker-scout-advanced
         uses: docker/scout-action@v1.17.1  
         with:
-          command: analyze
+          command: cves #analyze
           image: ${{ steps.meta.outputs.tags }}
-          only-severities: critical,high
+          only-severities: critical,high,medium
           sarif-file: docker-scout.sarif
           summary: true
       - run: echo "✅ Advanced Docker Scout Analysis status is ${{ job.status }}."
