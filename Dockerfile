@@ -17,8 +17,11 @@
 #FROM python:3.11.9
 
 #best image for the job
-FROM python:alpine
+#FROM python:alpine
 #FROM docker/dhi-python:3.9-debian12-dev
+
+#best image for the job
+FROM 3.13.3-alpine3.21
 
 # Prevents Python from writing pyc files.
 ENV PYTHONDONTWRITEBYTECODE=1
