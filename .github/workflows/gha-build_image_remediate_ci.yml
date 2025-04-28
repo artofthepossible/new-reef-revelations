@@ -34,6 +34,16 @@ jobs:
       packages: write
       pull-requests: write
 
+
+  post-build-checks:
+    needs: [build]
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      packages: write
+      pull-requests: write
+      security-events: write
+      
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{github.event_name }} event."
       - run: echo "🐧 This job is now running!"
@@ -144,3 +154,48 @@ jobs:
             echo "Please review the Docker Scout analysis results above."
             exit 1
           fi
+      - run: echo "✅ Validate DOCKER SCOUT Scan results status is ${{ job.status }}."
+
+      - name: Advanced Docker Scout Analysis
+        id: docker-scout-advanced
+        uses: docker/scout-action@v1.17.1  
+        with:
+          command: analyze
+          image: ${{ steps.meta.outputs.tags }}
+          only-severities: critical,high
+          sarif-file: docker-scout.sarif
+          summary: true
+      - run: echo "✅ Advanced Docker Scout Analysis status is ${{ job.status }}."
+
+      - name: Upload SARIF report
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: docker-scout.sarif
+          category: Docker-Scout
+      - run: echo "✅ Upload SARIF report status is ${{ job.status }}."
+
+     
+      - name: SBOMs Comparison
+        uses: docker/scout-action@v1.17.1
+        with:
+          command: compare
+          image: ${{ steps.meta.outputs.tags }}
+          to-ref: type=ref,ref=prod
+          format: sarif
+          #output-file: sbom-diff.sarif
+          sarif-file: docker-scout.sarif
+      - run: echo "✅ SBOMs Comparison status is ${{ job.status }}."
+
+
+      - name: Block Deployment on Failures
+        if: ${{ failure() }}
+        run: |
+          echo "🛑 Post-build security checks failed!"
+          echo "Review Docker Scout analysis results above."
+          exit 1
+
+      - name: Notify on Success
+        if: success()
+        run: |
+          echo "✅ All security checks passed"
+          echo "Image is cleared for production deployment"
