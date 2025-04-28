@@ -14,10 +14,10 @@ on:
 # Environment variables used throughout the workflow
 env:
   #sonar 
-  SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-  SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-  SONAR_PROJECTKEY: ${{ secrets.SONAR_PROJECTKEY }}
-  SONAR_ORGANIZATION: ${{ secrets.SONAR_ORGANIZATION }}
+  #SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  #SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+  #SONAR_PROJECTKEY: ${{ secrets.SONAR_PROJECTKEY }}
+  #SONAR_ORGANIZATION: ${{ secrets.SONAR_ORGANIZATION }}
 
   # Docker configuration
   # Use docker.io for Docker Hub if empty
