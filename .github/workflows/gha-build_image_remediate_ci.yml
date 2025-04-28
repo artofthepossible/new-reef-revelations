@@ -168,6 +168,7 @@ jobs:
       - run: echo "✅ Advanced Docker Scout Analysis status is ${{ job.status }}."
 
       - name: Upload SARIF report
+        id: docker-scout-sarif
         uses: github/codeql-action/upload-sarif@v2
         with:
           sarif_file: docker-scout.sarif
@@ -176,6 +177,7 @@ jobs:
 
      
       - name: SBOMs Comparison
+        id: docker-scout-sbom
         uses: docker/scout-action@v1.17.1
         with:
           command: compare
@@ -188,6 +190,7 @@ jobs:
 
 
       - name: Block Deployment on Failures
+        id: block-deployment
         if: ${{ failure() }}
         run: |
           echo "🛑 Post-build security checks failed!"
@@ -195,6 +198,7 @@ jobs:
           exit 1
 
       - name: Notify on Success
+        id: notify-success
         if: success()
         run: |
           echo "✅ All security checks passed"
