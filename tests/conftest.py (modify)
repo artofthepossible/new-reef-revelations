@@ -1,0 +1,11 @@
+import pytest
+
+@pytest.fixture(scope='session', autouse=True)
+def setup_session():
+    # Setup code here
+    yield
+    # Teardown code here
+
+@pytest.fixture
+def sample_fixture():
+    return "sample data"

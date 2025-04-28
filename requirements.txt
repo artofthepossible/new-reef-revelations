@@ -3,3 +3,7 @@ jinja2>=3.1.6
 werkzeug>=3.0.6
 #jinja2>=3.1.4
 #werkzeug>=3.0.4
+pytest>=7.0.0
+pytest-html>=4.0.0
+testcontainers>=3.7.0
+flask-testing>=0.8.1
