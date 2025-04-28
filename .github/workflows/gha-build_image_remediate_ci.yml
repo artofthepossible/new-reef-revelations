@@ -138,11 +138,20 @@ jobs:
         with:
           command: quickview, cves, recommendations
           image: ${{ steps.meta.outputs.tags }}
-          sarif-file: sarif.output.json
+          #sarif-file: sarif.output.json
+          sarif-file: docker-scout.sarif
           platform: "linux/arm64"
           summary: true
       - run: echo "✅ DOCKER SCOUT Analysis - QuickView, CVEs and Recommendations status is ${{ job.status }}."
 
+      - name: Check SARIF file existence
+        run: |
+          if [ ! -f docker-scout.sarif ]; then
+            echo "❌ SARIF file not found!"
+            exit 1
+          else
+            echo "✅ SARIF file found!"
+          fi
 
     # Compare the image built in the pull request with the one in production
       - name: Docker Scout
