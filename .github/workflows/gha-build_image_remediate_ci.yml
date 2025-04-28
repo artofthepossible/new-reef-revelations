@@ -33,16 +33,16 @@ jobs:
       contents: read
       packages: write
       pull-requests: write
-
-
-  post-build-checks:
-    needs: [build]
-    runs-on: ubuntu-24.04
-    permissions:
-      contents: read
-      packages: write
-      pull-requests: write
       security-events: write
+
+  #post-build-checks:
+    #needs: [build]
+    #runs-on: ubuntu-24.04
+    #permissions:
+      #contents: read
+      #packages: write
+      #pull-requests: write
+      #security-events: write
       
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{github.event_name }} event."
