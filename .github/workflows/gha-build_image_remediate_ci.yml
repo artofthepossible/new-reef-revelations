@@ -169,24 +169,14 @@ jobs:
 
       - name: Upload SARIF report
         id: docker-scout-sarif
-        uses: github/codeql-action/upload-sarif@v2
+        uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: docker-scout.sarif
           category: Docker-Scout
       - run: echo "✅ Upload SARIF report status is ${{ job.status }}."
 
      
-      - name: SBOMs Comparison
-        id: docker-scout-sbom
-        uses: docker/scout-action@v1.17.1
-        with:
-          command: compare
-          image: ${{ steps.meta.outputs.tags }}
-          to-ref: type=ref,ref=prod
-          format: sarif
-          #output-file: sbom-diff.sarif
-          sarif-file: docker-scout.sarif
-      - run: echo "✅ SBOMs Comparison status is ${{ job.status }}."
+     
 
 
       - name: Block Deployment on Failures
