@@ -128,16 +128,7 @@ jobs:
       - run: echo "✅ Build and push Docker image status is ${{ job.status }}."
     
            
-      # Security scanning and attestation steps
-      - name: Attest
-        uses: actions/attest-build-provenance@v2
-        id: attest
-        with:
-          subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-          subject-digest: ${{ steps.build-and-push.outputs.digest }}
-          push-to-registry: true
-      - run: echo "✅ Attest status is ${{ job.status }}."
-    
+       
     # Basic vulnerability scanning
       # Docker Scout display a quickview, cves, recommendations output
       - name: Analyze for critical and high CVEs
