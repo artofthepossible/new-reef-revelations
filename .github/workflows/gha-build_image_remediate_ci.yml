@@ -134,7 +134,7 @@ jobs:
       - name: Analyze for critical and high CVEs
         id: docker-scout-cves
         if: ${{ github.event_name != 'pull_request_target' }}
-        uses: docker/scout-action@v1.17.1
+        uses: docker/scout-action@v1.18.1
         with:
           command: quickview, cves, recommendations
           image: ${{ steps.meta.outputs.tags }}
@@ -157,7 +157,7 @@ jobs:
       - name: Docker Scout
         id: docker-scout
         if: ${{ github.event_name == 'pull_request' }}
-        uses: docker/scout-action@v1.17.1
+        uses: docker/scout-action@v1.18.1
         with:
           command: compare, recommendations, attestation-add
           image: ${{ steps.meta.outputs.tags }}
