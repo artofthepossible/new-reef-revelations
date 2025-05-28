@@ -1,108 +1,84 @@
-# syntax=docker/dockerfile:1
+Previous application Dockerfile
+#Njeri # syntax=docker/dockerfile:1
 
-# -----------------------------
-# Development stage
-# -----------------------------
-FROM demonstrationorg/dhi-python:3.13.3-alpine3.21-dev AS development
+# Comments are provided throughout this file to help you get started.
+# If you need more help, visit the Dockerfile reference guide at
+# https://docs.docker.com/go/dockerfile-reference/
 
-# Set DHI specific environment variables
-ENV DHI_APP_ENV=development \
-    DHI_LOG_LEVEL=DEBUG \
-    PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1
+# Want to help us make this template better? Share your feedback here: https://forms.gle/ybq9Krt8jtBL3iCk7
 
-WORKDIR /app
+#ARG PYTHON_VERSION=3.12.7
+#FROM python:${PYTHON_VERSION}-slim as base
 
-# Create DHI recommended application user
-ARG UID=10001
-RUN addgroup -S appgroup && \
-    adduser -S -D -H \
-    -h /nonexistent \
-    -s /sbin/nologin \
-    -G appgroup \
-    -u ${UID} \
-    appuser
+#worse
+#ARG PYTHON_VERSION=3.12.7
+#FROM python:${PYTHON_VERSION}-slim as base
 
-# Install development dependencies
-RUN apk add --no-cache \
-    gcc \
-    musl-dev \
-    linux-headers \
-    postgresql-dev \
-    wget
+#even worse IMAGE
+#FROM python:3.11.9
 
-# Install Python dependencies
-COPY --chown=appuser:appgroup requirements.txt .
-RUN --mount=type=cache,target=/root/.cache/pip \
-    python -m pip install --upgrade pip && \
-    python -m pip install --no-cache-dir -r requirements.txt
+#best image for the job
+#FROM python:alpine
+#FROM docker/dhi-python:3.9-debian12-dev
 
-# Create necessary directories
-RUN mkdir -p /app/static /app/templates /app/data && \
-    chown -R appuser:appgroup /app
+#best image for the job
 
-# Copy application code
-COPY --chown=appuser:appgroup . .
+FROM python:3.13.3-alpine3.21
 
-# Set development permissions
-RUN chmod -R 755 /app
+#DHI image - This is a custom image that includes Python 3.13.3 on Alpine 3.21.
+# It is optimized for running Python applications and includes necessary dependencies.
+# It is a good choice for lightweight applications that require Python.
+#FROM demonstrationorg/dhi-python:3.13.3-alpine3.21
+#FROM demonstrationorg/dhi-python:3.13.3-alpine3.21-dev
 
-USER appuser
 
-# -----------------------------
-# Production stage
-# -----------------------------
-FROM demonstrationorg/dhi-python:3.13.3-alpine3.21 AS production
+# Prevents Python from writing pyc files.
+ENV PYTHONDONTWRITEBYTECODE=1
 
-# Install basic utilities first
-RUN apk add --no-cache \
-    busybox \
-    busybox-suid
-
-ENV DHI_APP_ENV=production \
-    DHI_LOG_LEVEL=INFO \
-    PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1
+# Keeps Python from buffering stdout and stderr to avoid situations where
+# the application crashes without emitting any logs due to buffering.
+ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
 
-# Create production user
+# Create a non-privileged user that the app will run under.
+# See https://docs.docker.com/go/dockerfile-user-best-practices/
 ARG UID=10001
-RUN addgroup -S appgroup && \
-    adduser -S -D -H \
-    -h /nonexistent \
-    -s /sbin/nologin \
-    -G appgroup \
-    -u ${UID} \
+RUN adduser \
+    --disabled-password \
+    --gecos "" \
+    --home "/nonexistent" \
+    --shell "/sbin/nologin" \
+    --no-create-home \
+    --uid "${UID}" \
     appuser
 
-# Install minimal production dependencies
-RUN apk add --no-cache wget
-
-# Copy only necessary files from development stage
-COPY --from=development --chown=appuser:appgroup /app/requirements.txt .
+# Download dependencies as a separate step to take advantage of Docker's caching.
+# Leverage a cache mount to /root/.cache/pip to speed up subsequent builds.
+# Leverage a bind mount to requirements.txt to avoid having to copy them into
+# into this layer.
+#RUN --mount=type=cache,target=/root/.cache/pip \
+#    --mount=type=bind,source=requirements.txt,target=requirements.txt \
+#    python -m pip install -r requirements.txt
 RUN --mount=type=cache,target=/root/.cache/pip \
+    --mount=type=bind,source=requirements.txt,target=requirements.txt \
     python -m pip install --upgrade pip && \
     python -m pip install --no-cache-dir -r requirements.txt
-
-# Create necessary directories
-RUN mkdir -p /app/static /app/templates /app/data && \
-    chown -R appuser:appgroup /app
-
-# Copy application code from development stage
-COPY --from=development --chown=appuser:appgroup /app/static /app/static/
-COPY --from=development --chown=appuser:appgroup /app/templates /app/templates/
-COPY --from=development --chown=appuser:appgroup /app/*.py /app/
-
-# Set production permissions
-RUN chmod -R 755 /app/static /app/templates && \
-    chmod 644 /app/*.py
-
+    
+# Switch to the non-privileged user to run the application.
 USER appuser
 
+# Copy the source code into the container.
+COPY . .
+
+# Ensure the static files are included
+COPY static /app/static
+COPY templates /app/templates
+
+# Expose the port that the application listens on.
 EXPOSE 8000
 
-HEALTHCHECK --interval=30s --timeout=3s \
-    CMD wget --no-verbose --tries=1 --spider http://localhost:8000/health || exit 1
-
+# Run the application.
+#CMD gunicorn 'venv.lib.python3.12.site-packages.werkzeug.wsgi' --bind=0.0.0.0:8000
 CMD ["python", "app.py"]
+
