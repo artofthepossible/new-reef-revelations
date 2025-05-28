@@ -6,42 +6,19 @@
 
 # Want to help us make this template better? Share your feedback here: https://forms.gle/ybq9Krt8jtBL3iCk7
 
-#ARG PYTHON_VERSION=3.12.7
-#FROM python:${PYTHON_VERSION}-slim as base
+# Use DHI Python optimized base image
+FROM demonstrationorg/dhi-python:3.13.3-alpine3.21-dev
 
-#worse
-#ARG PYTHON_VERSION=3.12.7
-#FROM python:${PYTHON_VERSION}-slim as base
-
-#even worse IMAGE
-#FROM python:3.11.9
-
-#best image for the job
-#FROM python:alpine
-#FROM docker/dhi-python:3.9-debian12-dev
-
-#best image for the job
-
-#FROM python:3.13.3-alpine3.21
-
-#DHI image - This is a custom image that includes Python 3.13.3 on Alpine 3.21.
-# It is optimized for running Python applications and includes necessary dependencies.
-# It is a good choice for lightweight applications that require Python.
-FROM demonstrationorg/dhi-python:3.13.3-alpine3.21
-#FROM demonstrationorg/dhi-python:3.13.3-alpine3.21-dev
-
-
-# Prevents Python from writing pyc files.
+# Set DHI specific environment variables
+ENV DHI_APP_ENV=development
+ENV DHI_LOG_LEVEL=INFO
 ENV PYTHONDONTWRITEBYTECODE=1
-
-# Keeps Python from buffering stdout and stderr to avoid situations where
-# the application crashes without emitting any logs due to buffering.
 ENV PYTHONUNBUFFERED=1
 
+# Set working directory
 WORKDIR /app
 
-# Create a non-privileged user that the app will run under.
-# See https://docs.docker.com/go/dockerfile-user-best-practices/
+# Create DHI recommended application user
 ARG UID=10001
 RUN adduser \
     --disabled-password \
@@ -50,33 +27,36 @@ RUN adduser \
     --shell "/sbin/nologin" \
     --no-create-home \
     --uid "${UID}" \
+    --system \
     appuser
 
-# Download dependencies as a separate step to take advantage of Docker's caching.
-# Leverage a cache mount to /root/.cache/pip to speed up subsequent builds.
-# Leverage a bind mount to requirements.txt to avoid having to copy them into
-# into this layer.
-#RUN --mount=type=cache,target=/root/.cache/pip \
-#    --mount=type=bind,source=requirements.txt,target=requirements.txt \
-#    python -m pip install -r requirements.txt
+
+
+# Install Python dependencies
+COPY requirements.txt .
 RUN --mount=type=cache,target=/root/.cache/pip \
-    --mount=type=bind,source=requirements.txt,target=requirements.txt \
     python -m pip install --upgrade pip && \
     python -m pip install --no-cache-dir -r requirements.txt
-    
-# Switch to the non-privileged user to run the application.
+
+# Create necessary directories with proper permissions
+RUN mkdir -p /app/static /app/templates /app/data && \
+    chown -R appuser:appuser /app
+
+# Copy application code
+COPY --chown=appuser:appuser . .
+
+# Set proper permissions
+RUN chmod -R 755 /app/static /app/templates
+
+# Switch to non-root user
 USER appuser
 
-# Copy the source code into the container.
-COPY . .
-
-# Ensure the static files are included
-COPY static /app/static
-COPY templates /app/templates
-
-# Expose the port that the application listens on.
+# Expose application port
 EXPOSE 8000
 
-# Run the application.
-#CMD gunicorn 'venv.lib.python3.12.site-packages.werkzeug.wsgi' --bind=0.0.0.0:8000
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s \
+    CMD wget --no-verbose --tries=1 --spider http://localhost:8000/health || exit 1
+
+# Run the application
 CMD ["python", "app.py"]
