@@ -54,6 +54,11 @@ USER appuser
 # -----------------------------
 FROM demonstrationorg/dhi-python:3.13.3-alpine3.21 AS production
 
+# Install basic utilities first
+RUN apk add --no-cache \
+    busybox \
+    busybox-suid
+
 ENV DHI_APP_ENV=production \
     DHI_LOG_LEVEL=INFO \
     PYTHONDONTWRITEBYTECODE=1 \
