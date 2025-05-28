@@ -27,7 +27,8 @@
 #DHI image - This is a custom image that includes Python 3.13.3 on Alpine 3.21.
 # It is optimized for running Python applications and includes necessary dependencies.
 # It is a good choice for lightweight applications that require Python.
-FROM demonstrationorg/dhi-python:3.13.3-alpine3.21
+#FROM demonstrationorg/dhi-python:3.13.3-alpine3.21
+FROM demonstrationorg/dhi-python:3.13.3-alpine3.21-dev
 
 
 # Prevents Python from writing pyc files.
