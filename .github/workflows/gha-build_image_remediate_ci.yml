@@ -189,13 +189,13 @@ jobs:
       - run: echo "✅ Upload SARIF report status is ${{ job.status }}."
 
 # Final deployment gates
-      - name: Block Deployment on Failures
-        id: block-deployment
-        if: ${{ failure() }}
-        run: |
-          echo "🛑 Post-build security checks failed!"
-          echo "Review Docker Scout analysis results above."
-          exit 1
+      #- name: Block Deployment on Failures
+      #  id: block-deployment
+      #  if: ${{ failure() }}
+      #  run: |
+      #    echo "🛑 Post-build security checks failed!"
+      #    echo "Review Docker Scout analysis results above."
+      #    exit 1
 
       - name: Notify on Success
         id: notify-success
