@@ -1,4 +1,4 @@
-Previous application Dockerfile
+#Previous application Dockerfile
 #Njeri # syntax=docker/dockerfile:1
 
 # Comments are provided throughout this file to help you get started.
@@ -23,7 +23,8 @@ Previous application Dockerfile
 
 #best image for the job
 
-FROM python:3.13.3-alpine3.21
+#FROM python:3.13.3-alpine3.21
+FROM demonstrationorg/dhi-python:3.13.3-alpine3.21
 
 #DHI image - This is a custom image that includes Python 3.13.3 on Alpine 3.21.
 # It is optimized for running Python applications and includes necessary dependencies.
