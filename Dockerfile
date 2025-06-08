@@ -1,35 +1,9 @@
-#Previous application Dockerfile
-#Njeri # syntax=docker/dockerfile:1
-
-# Comments are provided throughout this file to help you get started.
-# If you need more help, visit the Dockerfile reference guide at
-# https://docs.docker.com/go/dockerfile-reference/
-
-# Want to help us make this template better? Share your feedback here: https://forms.gle/ybq9Krt8jtBL3iCk7
-
-#ARG PYTHON_VERSION=3.12.7
-#FROM python:${PYTHON_VERSION}-slim as base
-
-#worse
-#ARG PYTHON_VERSION=3.12.7
-#FROM python:${PYTHON_VERSION}-slim as base
 
 #even worse IMAGE
-#FROM python:3.11.9
+FROM python:3.11.9
 
 #best image for the job
-#FROM python:alpine
-#FROM docker/dhi-python:3.9-debian12-dev
-
-#best image for the job
-
-FROM python:3.13.3-alpine3.21
-#FROM demonstrationorg/dhi-python:3.13.3-alpine3.21-dev
-
-#DHI image - This is a custom image that includes Python 3.13.3 on Alpine 3.21.
-# It is optimized for running Python applications and includes necessary dependencies.
-# It is a good choice for lightweight applications that require Python.
-#FROM demonstrationorg/dhi-python:3.13.3-alpine3.21
+#FROM python:3.13.3-alpine3.21
 #FROM demonstrationorg/dhi-python:3.13.3-alpine3.21-dev
 
 
