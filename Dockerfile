@@ -3,8 +3,7 @@
 #FROM python:3.11.9
 
 #best image for the job
-#FROM python:3.13.3-alpine3.21
-FROM demonstrationorg/dhi-python:3.12.10-alpine3.21-dev
+FROM python:3.13.3-alpine3.21
 
 # Prevents Python from writing pyc files.
 ENV PYTHONDONTWRITEBYTECODE=1
