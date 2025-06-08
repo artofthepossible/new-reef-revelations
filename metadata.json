@@ -1,0 +1,10 @@
+{
+  "buildx.build.ref": "desktop-linux/desktop-linux/mf6mjjqqarkv3sptpj88iunn5",
+  "containerimage.descriptor": {
+    "mediaType": "application/vnd.oci.image.index.v1+json",
+    "digest": "sha256:89efb86e1b9bd822c7aca058ef970a7407b0c53e03ddcaeeec9c1987a3a21c3d",
+    "size": 1609
+  },
+  "containerimage.digest": "sha256:89efb86e1b9bd822c7aca058ef970a7407b0c53e03ddcaeeec9c1987a3a21c3d",
+  "image.name": "docker.io/demonstrationorg/docker-scout-reefrevelations:v608"
+}
