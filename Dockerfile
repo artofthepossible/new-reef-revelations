@@ -1,10 +1,10 @@
 
 #even worse IMAGE
-FROM python:3.11.9
+#FROM python:3.11.9
 
 #best image for the job
 #FROM python:3.13.3-alpine3.21
-#FROM demonstrationorg/dhi-python:3.13.3-alpine3.21-dev
+FROM demonstrationorg/dhi-python:3.13.3-alpine3.21-dev
 
 
 # Prevents Python from writing pyc files.
